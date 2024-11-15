@@ -41,7 +41,7 @@
     "sample": "npm run test:esm:node && npm run test:cjs:node"
   },
   "devDependencies": {
-    "@eslint/js": "^9.14.0",
+    "@eslint/js": "^9.15.0",
     "@jest/globals": "^29.7.0",
     "@types/eslint__js": "^8.42.3",
     "@types/jest": "^29.5.14",

@@ -1,5 +1,5 @@
 {
-  "name": "unbound.js",
+  "name": "unbound-control-ts",
   "private": true,
   "version": "0.0.0",
   "description": "",
@@ -15,10 +15,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsutus3/unbound.js.git"
+    "url": "git+https://github.com/tsutus3/unbound-control-ts.git"
   },
   "bugs": {
-    "url": "https://github.com/tsutsu3/unbound.js/issues"
+    "url": "https://github.com/tsutsu3/unbound-control-ts/issues"
   },
   "exports": {
     ".": {
@@ -27,7 +27,7 @@
       "import": "./dist/index.mjs"
     }
   },
-  "homepage": "https://tsutsu3.github.io/unbound.js",
+  "homepage": "https://tsutsu3.github.io/unbound-control-ts",
   "files": [
     "dist"
   ],

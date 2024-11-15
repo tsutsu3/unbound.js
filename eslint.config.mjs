@@ -6,7 +6,14 @@ import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
   {
-    ignores: ["dist", "examples", "vite.config.ts", "eslint.config.mjs"],
+    ignores: [
+      "dist",
+      "examples",
+      "vite.config.ts",
+      "eslint.config.mjs",
+      "jest.config.ts",
+      "coverage",
+    ],
   },
   {
     files: ["**/*.{js,mjs,cjs,ts}"],

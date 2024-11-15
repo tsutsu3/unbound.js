@@ -21,7 +21,7 @@ export default [
       parser: tsParser,
       parserOptions: {
         sourceType: "module",
-        project: "./tsconfig.json",
+        project: "./tsconfig.eslint.json",
         tsconfigRootDir: import.meta.dirname,
       },
       globals: globals.node,

@@ -1,0 +1,116 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint with ESLint
+        run: npm run lint
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x, 20.x, 22.x]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run test:all
+      - name: Upload coverage reports to Codecov
+        if: matrix.node-version == '20.x' && github.repository == 'tsutsu3/unbound-control-ts'
+        uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+  changelog:
+    name: Generate Changelog
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref_name, 'release-v')
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Extract version from branch
+        id: extract_version
+        run: |
+          branch_name="${{ github.ref_name }}"
+          version="${branch_name#release-v}"
+          echo "version=v$version" >> $GITHUB_ENV
+      - name: Generate Changelog
+        run: |
+          git cliff --tag ${{ env.version }} --output CHANGELOG.md
+          git add CHANGELOG.md
+          git commit -m "chore: update CHANGELOG for version ${{ env.version }}"
+          git push origin ${{ github.ref_name }}
+
+  # After the PR is merged to the main branch, create a new tag and release
+  release:
+    name: Create Tag and Release
+    needs: test
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release-v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Extract version from branch
+        id: extract_version
+        run: |
+          branch_name=$(echo "${GITHUB_REF}" | awk -F'/' '{print $3}')
+          version=${branch_name#release-v}
+          echo "version=${version}" >> $GITHUB_ENV
+      - name: Generate Latest Changelog
+        run: |
+          git cliff --tag ${{ env.version }} --output CHANGELOG_DIFF.md --latest
+      - name: Create and push tag
+        run: |
+          git tag -a "v${{ env.version }}" -m "Release v${{ env.version }}"
+          git push origin "v${{ env.version }}"
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v${{ env.version }}"
+          release_name: "Release v${{ env.version }}"
+          body_path: CHANGELOG_DIFF.md
+          draft: false
+          prerelease: false
+  publish:
+    needs: [release]
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release-v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,45 @@
+{
+  "name": "unbound-control-ts",
+  "private": true,
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "author": "tsutsu3",
+  "license": "MIT",
+  "keywords": [
+    "unbound",
+    "unbound-control"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsutus3/unbound-control-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tsutsu3/unbound-control-ts/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "homepage": "https://tsutsu3.github.io/unbound-control-ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "test:esm:node": "node examples/node/index.mjs",
+    "test:cjs:node": "node examples/node/index.cjs"
+  },
+  "devDependencies": {
+    "git-cliff": "^2.6.1",
+    "typescript": "~5.6.2",
+    "vite": "^5.4.10",
+    "vite-plugin-dts": "^4.3.0"
+  }
+}

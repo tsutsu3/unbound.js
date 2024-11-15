@@ -10,6 +10,7 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "esModuleInterop": true,
 
     /* Linting */
     "strict": true,
@@ -18,5 +19,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "example"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -7,11 +7,10 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: "sample-lib",
-      formats: ["es", "cjs", "umd"],
+      formats: ["es", "cjs"],
       fileName: (format) => {
         if (format === "es") return "index.mjs";
         if (format === "cjs") return "index.cjs";
-        if (format === "umd") return "index.js";
         return "index.js";
       },
     },

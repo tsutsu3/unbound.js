@@ -1,0 +1,31 @@
+services:
+  unbound-setup:
+    image: mvance/unbound:latest
+    volumes:
+      - ${UNBOUND_CONF_PATH}:/opt/unbound/etc/unbound
+    restart: "no"
+    entrypoint: []
+    command: >-
+      /bin/sh -c "
+      if [ ! -f /opt/unbound/etc/unbound/key/unbound_server.key ]; then
+        echo 'Setup start' &&
+        unbound-control-setup &&
+        mkdir /opt/unbound/etc/unbound/key &&
+        mv /opt/unbound/etc/unbound/unbound_* /opt/unbound/etc/unbound/key &&
+        echo 'Setup complete';
+      else
+        echo 'Certificates already exist';
+      fi
+      "
+  unbound:
+    image: mvance/unbound:latest
+    container_name: unbound
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8953:8953"
+    volumes:
+      - ${UNBOUND_CONF_PATH}:/opt/unbound/etc/unbound
+    restart: unless-stopped
+    depends_on:
+      - unbound-setup

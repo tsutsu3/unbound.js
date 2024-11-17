@@ -22,5 +22,6 @@ dist-ssr
 
 
 coverage/
-unbound-config/*
-!unbound-config/unbound.conf
+unbound-config/*/*
+!unbound-config/tls/unbound.conf
+!unbound-config/unix/unbound.conf

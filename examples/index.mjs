@@ -1,4 +1,13 @@
-import { hello } from "../../dist/index.mjs";
+import { UnboundControl } from "../dist/index.mjs";
 
-const result = hello();
-console.log(`ESM Result: ${result}`);
+const unixSocketName = "../unbound-config/unix/socket/unbound.ctl";
+const control = new UnboundControl(unixSocketName);
+
+control
+  .sendCommand("status")
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.error(err);
+  });

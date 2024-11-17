@@ -15,6 +15,7 @@ export default defineConfig({
       },
     },
     rollupOptions: {
+      external: ["net", "fs", "path"],
       output: {
         dir: "dist",
       },

@@ -1,0 +1,6 @@
+data:
+  - title: Normal status
+    raw: |
+      # unbound-control response
+    expected: |
+      # unbound-control-ts json reponse

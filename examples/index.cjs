@@ -1,13 +1,39 @@
-const { UnboundControl } = require("../dist/index.cjs");
+const path = require("path");
+const { UnboundControlClient, UnboundError } = require("../dist/index.cjs");
 
-const unixSocketName = "../unbound-config/unix/socket/unbound.ctl";
-const control = new UnboundControl(unixSocketName);
+const baseDir = path.resolve(__dirname, "..");
 
-control
-  .sendCommand("status")
-  .then((data) => {
-    console.log(data);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+const unixSocketName = path.join(
+  baseDir,
+  "unbound-config/unix/socket/unbound.ctl",
+);
+
+const client = new UnboundControlClient(unixSocketName);
+
+(async () => {
+  try {
+    const response = await client.status();
+    console.log(response.raw);
+    console.log(response.json);
+  } catch (error) {
+    if (error instanceof UnboundError) {
+      console.error(error.message);
+    } else {
+      console.error(error);
+    }
+  }
+})();
+
+(async () => {
+  try {
+    const response = await client.status();
+    console.log(response.raw);
+    console.log(response.json);
+  } catch (error) {
+    if (error instanceof UnboundError) {
+      console.error(error.message);
+    } else {
+      console.error(error);
+    }
+  }
+})();

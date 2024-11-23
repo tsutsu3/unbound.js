@@ -25,3 +25,5 @@ coverage/
 unbound-config/*/*
 !unbound-config/tls/unbound.conf
 !unbound-config/unix/unbound.conf
+tests/__snapshots__
+tests/key

@@ -1,0 +1,61 @@
+data:
+  - title: Start up
+    raw: |
+      total.num.queries=0
+      total.num.queries_ip_ratelimited=0
+      total.num.queries_cookie_valid=0
+      total.num.queries_cookie_client=0
+      total.num.queries_cookie_invalid=0
+      total.num.cachehits=0
+      total.num.cachemiss=0
+      total.num.prefetch=0
+      total.num.queries_timed_out=0
+      total.query.queue_time_us.max=0
+      total.num.expired=0
+      total.num.recursivereplies=0
+      total.requestlist.avg=0
+      total.requestlist.max=0
+      total.requestlist.overwritten=0
+      total.requestlist.exceeded=0
+      total.requestlist.current.all=0
+      total.requestlist.current.user=0
+      total.recursion.time.avg=0.000000
+      total.recursion.time.median=0
+      total.tcpusage=0
+      time.now=1731837810.163703
+      time.up=2.858856
+      time.elapsed=2.858856
+    expected:
+      total:
+        num:
+          queries: 0
+          queries_ip_ratelimited: 0
+          queries_cookie_valid: 0
+          queries_cookie_client: 0
+          queries_cookie_invalid: 0
+          cachehits: 0
+          cachemiss: 0
+          prefetch: 0
+          queries_timed_out: 0
+          expired: 0
+          recursivereplies: 0
+        query:
+          queue_time_us:
+            max: 0
+        requestlist:
+          avg: 0
+          max: 0
+          overwritten: 0
+          exceeded: 0
+          current:
+            all: 0
+            user: 0
+        recursion:
+          time:
+            avg: 0.000000
+            median: 0
+        tcpusage: 0
+      time:
+        now: 1731837810.163703
+        up: 2.858856
+        elapsed: 2.858856

@@ -65,6 +65,9 @@ jobs:
             exit 1
           fi
 
+      - name: Set permissions for Unix socket
+        run: chmod 777 "$GITHUB_WORKSPACE/unbound-config/unix/socket/unbound.ctl"
+
       - name: Test Unbound
         run: |
           dig @localhost -p ${{ matrix.unbound-port }} example.com

@@ -21,9 +21,9 @@ services:
     image: mvance/unbound:${UNBOUND_VERSION:-latest}
     container_name: unbound-${UNBOUND_VERSION:-latest}
     ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "8953:8953"
+      - "${UNBOUND_DNS_PORT:-53}:53/tcp"
+      - "${UNBOUND_DNS_PORT:-53}:53/udp"
+      - "${UNBOUND_CONTROL_PORT:-8953}:8953"
     volumes:
       - ${UNBOUND_CONF_PATH:-./unbound-config/unix}:/opt/unbound/etc/unbound
     restart: unless-stopped

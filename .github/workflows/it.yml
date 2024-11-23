@@ -21,11 +21,17 @@ jobs:
       - name: Set up Docker Compose
         run: sudo apt-get update && sudo apt-get install -y docker-compose
       - name: Start Unbound containers
-        run: UNBOUND_VERSION=${{ matrix.unbound-version }} docker-compose up -d
+        run: |
+          UNBOUND_VERSION=${{ matrix.unbound-version }} \
+          UNBOUND_DNS_PORT=$((5300 + ${{ matrix.unbound-version | split(".") | nth(1) | int }})) \
+          UNBOUND_CONTROL_PORT=$((8953 + ${{ matrix.unbound-version | split(".") | nth(1) | int }})) \
+          docker-compose up -d
       - name: Verify Unbound is running
         run: docker ps
       - name: Test Unbound
-        run: dig @unbound-${{ matrix.unbound-version }} example.com
+        run: |
+          UNBOUND_DNS_PORT=$((5300 + ${{ matrix.unbound-version | split(".") | nth(1) | int }})) \
+          dig @unbound-${{ matrix.unbound-version }} -p $UNBOUND_PORT example.com
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:

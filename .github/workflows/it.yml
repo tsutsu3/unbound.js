@@ -45,7 +45,7 @@ jobs:
         run: docker ps
       - name: Test Unbound
         run: |
-          dig @unbound-${{ matrix.unbound-version }} -p ${{ matrix.unbound-port }} example.com
+          dig @localhost -p ${{ matrix.unbound-port }} example.com
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:

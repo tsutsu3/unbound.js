@@ -110,7 +110,7 @@ export class UnboundControlClient {
           result.options = value
             .replace(/[[\]]/g, "")
             .trim()
-            .split(",")
+            .split(" ")
             .map((item) => item.trim());
           break;
         default:

@@ -6,7 +6,7 @@ data:
       threads: 1
       modules: 3  [ subnetcache validator iterator ]
       uptime: 3 seconds
-      options: [ reuseport, control(namedpipe) ]
+      options: [ reuseport control(namedpipe) ]
       unbound (pid 1) is running...
     expected:
       version: 1.22.0

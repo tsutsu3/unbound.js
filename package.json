@@ -35,8 +35,8 @@
     "build": "tsc && vite build",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest --detectOpenHandles control.test.ts",
-    "snapshot": "jest --detectOpenHandles control.snapshot.test.ts",
+    "test": "jest --detectOpenHandles tests/control.test.ts",
+    "snapshot": "jest --detectOpenHandles tests/control.snapshot.test.ts",
     "sample:esm": "node examples/index.mjs",
     "sample:cjs": "node examples/index.cjs",
     "sample": "npm run test:esm:node && npm run test:cjs:node"

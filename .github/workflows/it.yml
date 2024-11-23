@@ -14,7 +14,22 @@ jobs:
 
     strategy:
       matrix:
-        unbound-version: [1.17.0, 1.18.0, 1.19.3, 1.21.1, 1.22.0]
+        include:
+          - unbound-version: 1.18.0
+            unbound-port: 5318
+            unbound-control-port: 8918
+          - unbound-version: 1.19.3
+            unbound-port: 5319
+            unbound-control-port: 8919
+          - unbound-version: 1.20.0
+            unbound-port: 5320
+            unbound-control-port: 8920
+          - unbound-version: 1.21.1
+            unbound-port: 5321
+            unbound-control-port: 8921
+          - unbound-version: 1.22.0
+            unbound-port: 5322
+            unbound-control-port: 8922
 
     steps:
       - uses: actions/checkout@v4
@@ -23,15 +38,14 @@ jobs:
       - name: Start Unbound containers
         run: |
           UNBOUND_VERSION=${{ matrix.unbound-version }} \
-          UNBOUND_DNS_PORT=$((5300 + ${{ matrix.unbound-version | split(".") | nth(1) | int }})) \
-          UNBOUND_CONTROL_PORT=$((8953 + ${{ matrix.unbound-version | split(".") | nth(1) | int }})) \
+          UNBOUND_DNS_PORT=${{ matrix.unbound-port }} \
+          UNBOUND_CONTROL_PORT=${{ matrix.unbound-control-port }} \
           docker-compose up -d
       - name: Verify Unbound is running
         run: docker ps
       - name: Test Unbound
         run: |
-          UNBOUND_DNS_PORT=$((5300 + ${{ matrix.unbound-version | split(".") | nth(1) | int }})) \
-          dig @unbound-${{ matrix.unbound-version }} -p $UNBOUND_PORT example.com
+          dig @unbound-${{ matrix.unbound-version }} -p ${{ matrix.unbound-port }} example.com
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:

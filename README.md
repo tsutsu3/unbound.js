@@ -90,22 +90,47 @@ yarn add unbound-control-ts
 Here's a basic example to demonstrate how to use the library:
 
 ```ts
-import { UnboundControl } from 'unbound-control-ts';
+import { UnboundControlClient } from 'unbound-control-ts';
 
-// Initialize the client with the path to the unbound-control binary
-const unbound = new UnboundControl('/path/to/unbound-control');
+const client = new UnboundControlClient('/path/to/unbound-control.sock');
 
-// Fetch and display Unbound statistics
-async function getStats() {
+(async () => {
   try {
-    const stats = await unbound.stats();
-    console.log('Unbound Statistics:', stats);
+    const response = await client.status();
+    console.log(response);
   } catch (error) {
-    console.error('Error fetching stats:', error);
+    if (error instanceof UnboundError) {
+      console.error(error.message);
+    } else {
+      console.error(error);
+    }
   }
-}
+})();
+```
 
-getStats();
+output:
+
+```json
+{
+  "json": {
+    "modules": [
+      "subnetcache",
+      "validator",
+      "iterator",
+    ],
+    "options": [
+      "reuseport",
+      "control(namedpipe)",
+    ],
+    "pid": 1,
+    "status": "running",
+    "threads": 1,
+    "uptime": 292,
+    "verbosity": 1,
+    "version": "1.22.0",
+  },
+  "raw": "version: 1.22.0\nverbosity: 1\nthreads: 1\nmodules: 3 [ subnetcache validator iterator ]\nuptime: 292 seconds\noptions: reuseport control(namedpipe)\nunbound (pid 1) is running...\n",
+}
 ```
 
 ## Development

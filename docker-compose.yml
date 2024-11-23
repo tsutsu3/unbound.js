@@ -19,7 +19,7 @@ services:
       "
   unbound:
     image: mvance/unbound:${UNBOUND_VERSION:-latest}
-    container_name: unbound
+    container_name: unbound-${UNBOUND_VERSION:-latest}
     ports:
       - "53:53/tcp"
       - "53:53/udp"

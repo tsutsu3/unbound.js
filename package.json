@@ -36,6 +36,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest --detectOpenHandles tests/control.test.ts",
+    "test:it": "jest --detectOpenHandles tests/control.it.test.ts",
     "snapshot": "jest --detectOpenHandles tests/control.snapshot.test.ts",
     "sample:esm": "node examples/index.mjs",
     "sample:cjs": "node examples/index.cjs",

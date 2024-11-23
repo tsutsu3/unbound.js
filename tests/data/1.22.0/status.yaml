@@ -12,8 +12,8 @@ data:
       version: 1.22.0
       verbosity: 1
       threads: 1
-      modules: [ subnetcache, validator, iterator ]
+      modules: [subnetcache, validator, iterator]
       uptime: 3
-      options: [ reuseport, control(namedpipe) ]
+      options: [reuseport, control(namedpipe)]
       pid: 1
       status: running

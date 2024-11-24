@@ -209,29 +209,45 @@ export class UnboundControlClient {
   /**
    * Start the server.
    */
-  public async start(): Promise<string> {
-    return this.control.sendCommand("start");
+  public async start(): Promise<Response> {
+    const raw = await this.control.sendCommand("start");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
    * Stop the server. The server daemon exits.
    */
-  public async stop(): Promise<string> {
-    return this.control.sendCommand("stop");
+  public async stop(): Promise<Response> {
+    const raw = await this.control.sendCommand("stop");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
    * Reload the server. This flushes the cache and reads the config file fresh.
    */
-  public async reload(): Promise<string> {
-    return this.control.sendCommand("reload");
+  public async reload(): Promise<Response> {
+    const raw = await this.control.sendCommand("reload");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
    * Reload the server but try to keep the RRset and message cache if (re)configuration allows for it.
    */
-  public async reload_keep_cache(): Promise<string> {
-    return this.control.sendCommand("reload_keep_cache");
+  public async reload_keep_cache(): Promise<Response> {
+    const raw = await this.control.sendCommand("reload_keep_cache");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -275,8 +291,12 @@ export class UnboundControlClient {
   /**
    * Reopen the logfile, close and open it.
    */
-  public async log_reopen(): Promise<string> {
-    return this.control.sendCommand("log_reopen");
+  public async log_reopen(): Promise<Response> {
+    const raw = await this.control.sendCommand("log_reopen");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -358,40 +378,64 @@ export class UnboundControlClient {
     };
   }
 
-  // public async local_zone(name: string, type: string): Promise<string> {}
+  // public async local_zone(name: string, type: string): Promise<Response> {}
 
-  // public async local_zone_remove(name: string): Promise<string> {}
+  // public async local_zone_remove(name: string): Promise<Response> {}
 
-  // public async local_data(rr: string, data: unknown): Promise<string> {}
+  // public async local_data(rr: string, data: unknown): Promise<Response> {}
 
-  public async local_data_remove(name: string): Promise<string> {
-    return this.control.sendCommand(`local_data_remove ${name}`);
+  public async local_data_remove(name: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`local_data_remove ${name}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
    * Add local zones read from stdin of unbound-control.
    */
-  public async local_zones(): Promise<string> {
-    return this.control.sendCommand("local_zones");
+  public async local_zones(): Promise<Response> {
+    const raw = await this.control.sendCommand("local_zones");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
    * Remove local zones read from stdin of unbound-control. Input is one name per line. For bulk removals.
    */
-  public async local_zones_remove(): Promise<string> {
-    return this.control.sendCommand("local_zones_remove");
+  public async local_zones_remove(): Promise<Response> {
+    const raw = await this.control.sendCommand("local_zones_remove");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async dump_cache(): Promise<string> {
-    return this.control.sendCommand("dump_cache");
+  public async dump_cache(): Promise<Response> {
+    const raw = await this.control.sendCommand("dump_cache");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async load_cache(): Promise<string> {
-    return this.control.sendCommand("load_cache");
+  public async load_cache(): Promise<Response> {
+    const raw = await this.control.sendCommand("load_cache");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async lookup(name: string): Promise<string> {
-    return this.control.sendCommand(`lookup ${name}`);
+  public async lookup(name: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`lookup ${name}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -403,9 +447,13 @@ export class UnboundControlClient {
   public async flush(
     name: string,
     useCachedb: boolean = false,
-  ): Promise<string> {
+  ): Promise<Response> {
     const command = useCachedb ? `flush +c ${name}` : `flush ${name}`;
-    return this.control.sendCommand(command);
+    const raw = await this.control.sendCommand(command);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -418,11 +466,15 @@ export class UnboundControlClient {
     name: string,
     type: string,
     useCachedb: boolean = false,
-  ): Promise<string> {
+  ): Promise<Response> {
     const command = useCachedb
       ? `flush_type +c ${name} ${type}`
       : `flush_type ${name} ${type}`;
-    return this.control.sendCommand(command);
+    const raw = await this.control.sendCommand(command);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -433,43 +485,75 @@ export class UnboundControlClient {
   public async flush_zone(
     name: string,
     useCachedb: boolean = false,
-  ): Promise<string> {
+  ): Promise<Response> {
     const command = useCachedb ? `flush_zone +c ${name}` : `flush_zone ${name}`;
-    return this.control.sendCommand(command);
+    const raw = await this.control.sendCommand(command);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async flush_bogus(useCachedb: boolean = false): Promise<string> {
+  public async flush_bogus(useCachedb: boolean = false): Promise<Response> {
     const command = useCachedb ? "flush_bogus +c" : "flush_bogus";
-    return this.control.sendCommand(command);
+    const raw = await this.control.sendCommand(command);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async flush_negative(useCachedb: boolean = false): Promise<string> {
+  public async flush_negative(useCachedb: boolean = false): Promise<Response> {
     const command = useCachedb ? "flush_negative +c" : "flush_negative";
-    return this.control.sendCommand(command);
+    const raw = await this.control.sendCommand(command);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async flush_stats(): Promise<string> {
-    return this.control.sendCommand("flush_stats");
+  public async flush_stats(): Promise<Response> {
+    const raw = await this.control.sendCommand("flush_stats");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async flush_requestlist(): Promise<string> {
-    return this.control.sendCommand("flush_requestlist");
+  public async flush_requestlist(): Promise<Response> {
+    const raw = await this.control.sendCommand("flush_requestlist");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async dump_requestlist(): Promise<string> {
-    return this.control.sendCommand("dump_requestlist");
+  public async dump_requestlist(): Promise<Response> {
+    const raw = await this.control.sendCommand("dump_requestlist");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async flush_infra(address: string): Promise<string> {
+  public async flush_infra(address: string): Promise<Response> {
     this.checkValidIp(address);
-    return this.control.sendCommand(`flush_infra ${address}`);
+    const raw = await this.control.sendCommand(`flush_infra ${address}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
    * Show the contents of the infra cache.
    */
-  public async dump_infra(): Promise<string> {
-    return this.control.sendCommand("dump_infra");
+  public async dump_infra(): Promise<Response> {
+    const raw = await this.control.sendCommand("dump_infra");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -477,8 +561,17 @@ export class UnboundControlClient {
    * @param option - The configuration option to set. Must be one of the predefined valid options.
    * @param value - The value to assign to the option. The type and range depend on the option.
    */
-  public async set_option(option: ValidOption, value: string): Promise<string> {
-    return this.control.sendCommand(`set_option ${option}: ${value}`);
+  public async set_option(
+    option: ValidOption,
+    value: string,
+  ): Promise<Response> {
+    const raw = await this.control.sendCommand(
+      `set_option ${option}: ${value}`,
+    );
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -486,36 +579,68 @@ export class UnboundControlClient {
    * @param option
    * @returns
    */
-  public async get_option(option: ValidOption): Promise<string> {
-    return this.control.sendCommand(`get_option ${option}`);
+  public async get_option(option: ValidOption): Promise<Response> {
+    const raw = await this.control.sendCommand(`get_option ${option}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async list_stubs(): Promise<string> {
-    return this.control.sendCommand("list_stubs");
+  public async list_stubs(): Promise<Response> {
+    const raw = await this.control.sendCommand("list_stubs");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async list_forwards(): Promise<string> {
-    return this.control.sendCommand("list_forwards");
+  public async list_forwards(): Promise<Response> {
+    const raw = await this.control.sendCommand("list_forwards");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async list_insecure(): Promise<string> {
-    return this.control.sendCommand("list_insecure");
+  public async list_insecure(): Promise<Response> {
+    const raw = await this.control.sendCommand("list_insecure");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async list_local_zones(): Promise<string> {
-    return this.control.sendCommand("list_local_zones");
+  public async list_local_zones(): Promise<Response> {
+    const raw = await this.control.sendCommand("list_local_zones");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async list_local_data(): Promise<string> {
-    return this.control.sendCommand("list_local_data");
+  public async list_local_data(): Promise<Response> {
+    const raw = await this.control.sendCommand("list_local_data");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async insecure_add(zone: string): Promise<string> {
-    return this.control.sendCommand(`insecure_add ${zone}`);
+  public async insecure_add(zone: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`insecure_add ${zone}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async insecure_remove(zone: string): Promise<string> {
-    return this.control.sendCommand(`insecure_remove ${zone}`);
+  public async insecure_remove(zone: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`insecure_remove ${zone}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -533,7 +658,7 @@ export class UnboundControlClient {
     addresses: string[],
     insecure: boolean = false,
     useTLS: boolean = false,
-  ): Promise<string> {
+  ): Promise<Response> {
     if (addresses.length === 0) {
       throw new ParseError("At least one address must be provided.");
     }
@@ -547,15 +672,25 @@ export class UnboundControlClient {
     const command =
       `forward_add ${flags} ${zone} ${addresses.join(" ")}`.trim();
 
-    return this.control.sendCommand(command);
+    const raw = await this.control.sendCommand(command);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   public async forward_remove(
     zone: string,
     insecure: boolean = false,
-  ): Promise<string> {
+  ): Promise<Response> {
     const flags = insecure ? "+i" : "";
-    return this.control.sendCommand(`forward_remove ${flags} ${zone}`);
+    const raw = await this.control.sendCommand(
+      `forward_remove ${flags} ${zone}`,
+    );
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -573,7 +708,7 @@ export class UnboundControlClient {
     insecure: boolean = false,
     prime: boolean = false,
     useTLS: boolean = false,
-  ): Promise<string> {
+  ): Promise<Response> {
     if (addresses.length === 0) {
       throw new ParseError("At least one address must be provided.");
     }
@@ -586,31 +721,49 @@ export class UnboundControlClient {
     const flags = `${insecure ? "+i" : ""}${prime ? "+p" : ""}${useTLS ? "+t" : ""}`;
     const command = `stub_add ${flags} ${zone} ${addresses.join(" ")}`.trim();
 
-    return this.control.sendCommand(command);
+    const raw = await this.control.sendCommand(command);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   public async stub_remove(
     zone: string,
     insecure: boolean = false,
-  ): Promise<string> {
+  ): Promise<Response> {
     const flags = insecure ? "+i" : "";
-    return this.control.sendCommand(`stub_remove ${flags} ${zone}`);
+    const raw = await this.control.sendCommand(`stub_remove ${flags} ${zone}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
    * Setup forwarding mode.
    */
-  public async forward(addresses: string | string[]): Promise<string> {
+  public async forward(addresses: string | string[]): Promise<Response> {
     if (typeof addresses === "string") {
       this.checkValidIp(addresses);
-      return this.control.sendCommand(`forward ${addresses}`);
+      const raw = await this.control.sendCommand(`forward ${addresses}`);
+      return {
+        raw: raw,
+        json: { todo: "Not implemented" },
+      };
     }
 
     for (const address of addresses) {
       this.checkValidIp(address);
     }
 
-    return this.control.sendCommand(`forward ${addresses.join(" ")}`);
+    const raw = await this.control.sendCommand(
+      `forward ${addresses.join(" ")}`,
+    );
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   /**
@@ -618,97 +771,183 @@ export class UnboundControlClient {
    *
    * @param allDomains - Whether to include all domains (not just rate-limited ones). Defaults to `false`.
    */
-  public async ratelimit_list(allDomains: boolean = false): Promise<string> {
+  public async ratelimit_list(allDomains: boolean = false): Promise<Response> {
     const command = `ratelimit_list ${allDomains ? "+a" : ""}`.trim();
-    return this.control.sendCommand(command);
+    const raw = await this.control.sendCommand(command);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async ip_ratelimit_list(allDomains: boolean = false): Promise<string> {
+  public async ip_ratelimit_list(
+    allDomains: boolean = false,
+  ): Promise<Response> {
     const command = `ip_ratelimit_list ${allDomains ? "+a" : ""}`.trim();
-    return this.control.sendCommand(command);
+    const raw = await this.control.sendCommand(command);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async list_auth_zones(): Promise<string> {
-    return this.control.sendCommand("list_auth_zones");
+  public async list_auth_zones(): Promise<Response> {
+    const raw = await this.control.sendCommand("list_auth_zones");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async auth_zone_reload(zone: string): Promise<string> {
-    return this.control.sendCommand(`auth_zone_reload ${zone}`);
+  public async auth_zone_reload(zone: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`auth_zone_reload ${zone}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async auth_zone_transfer(zone: string): Promise<string> {
-    return this.control.sendCommand(`auth_zone_transfer ${zone}`);
+  public async auth_zone_transfer(zone: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`auth_zone_transfer ${zone}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async rpz_enable(zone: string): Promise<string> {
-    return this.control.sendCommand(`rpz_enable ${zone}`);
+  public async rpz_enable(zone: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`rpz_enable ${zone}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async rpz_disable(zone: string): Promise<string> {
-    return this.control.sendCommand(`rpz_disable ${zone}`);
+  public async rpz_disable(zone: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`rpz_disable ${zone}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async view_list_local_zones(view: string): Promise<string> {
-    return this.control.sendCommand(`view_list_local_zones ${view}`);
+  public async view_list_local_zones(view: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`view_list_local_zones ${view}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   public async view_local_zone(
     view: string,
     name: string,
     type: string,
-  ): Promise<string> {
-    return this.control.sendCommand(`view_local_zone ${view} ${name} ${type}`);
+  ): Promise<Response> {
+    const raw = await this.control.sendCommand(
+      `view_local_zone ${view} ${name} ${type}`,
+    );
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   public async view_local_zone_remove(
     view: string,
     name: string,
-  ): Promise<string> {
-    return this.control.sendCommand(`view_local_zone_remove ${view} ${name}`);
+  ): Promise<Response> {
+    const raw = await this.control.sendCommand(
+      `view_local_zone_remove ${view} ${name}`,
+    );
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async view_list_local_data(view: string): Promise<string> {
-    return this.control.sendCommand(`view_list_local_data ${view}`);
+  public async view_list_local_data(view: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`view_list_local_data ${view}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   public async view_local_data(
     view: string,
     rr: string,
     data: string[],
-  ): Promise<string> {
-    return this.control.sendCommand(
+  ): Promise<Response> {
+    const raw = await this.control.sendCommand(
       `view_local_data ${view} ${rr} ${data.join(" ")}`.trim(),
     );
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
   public async view_local_data_remove(
     view: string,
     name: string,
-  ): Promise<string> {
-    return this.control.sendCommand(`view_local_data_remove ${view} ${name}`);
+  ): Promise<Response> {
+    const raw = await this.control.sendCommand(
+      `view_local_data_remove ${view} ${name}`,
+    );
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async view_local_datas_remove(view: string): Promise<string> {
-    return this.control.sendCommand(`view_local_datas_remove ${view}`);
+  public async view_local_datas_remove(view: string): Promise<Response> {
+    const raw = await this.control.sendCommand(
+      `view_local_datas_remove ${view}`,
+    );
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async view_local_datas(view: string): Promise<string> {
-    return this.control.sendCommand(`view_local_datas ${view}`);
+  public async view_local_datas(view: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`view_local_datas ${view}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async add_cookie_secret(secret: string): Promise<string> {
-    return this.control.sendCommand(`add_cookie_secret ${secret}`);
+  public async add_cookie_secret(secret: string): Promise<Response> {
+    const raw = await this.control.sendCommand(`add_cookie_secret ${secret}`);
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async drop_cookie_secret(): Promise<string> {
-    return this.control.sendCommand("drop_cookie_secret");
+  public async drop_cookie_secret(): Promise<Response> {
+    const raw = await this.control.sendCommand("drop_cookie_secret");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async activate_cookie_secret(): Promise<string> {
-    return this.control.sendCommand("activate_cookie_secret");
+  public async activate_cookie_secret(): Promise<Response> {
+    const raw = await this.control.sendCommand("activate_cookie_secret");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 
-  public async print_cookie_secrets(): Promise<string> {
-    return this.control.sendCommand("print_cookie_secrets");
+  public async print_cookie_secrets(): Promise<Response> {
+    const raw = await this.control.sendCommand("print_cookie_secrets");
+    return {
+      raw: raw,
+      json: { todo: "Not implemented" },
+    };
   }
 }

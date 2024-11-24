@@ -13,13 +13,10 @@ interface ParsedData {
 
 interface TestCase {
   title: string;
+  options: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   raw: string;
   expected: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-}
-
-interface ResponseData {
-  raw: string;
-  json: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  exception: string;
 }
 
 describe(`Unix domain socket docker server tests. Unbound version: ${unboundVersion}`, () => {
@@ -42,16 +39,33 @@ describe(`Unix domain socket docker server tests. Unbound version: ${unboundVers
     const fileContent = fs.readFileSync(path.join(dataDir, file), "utf-8");
     const contents = YAML.parse(fileContent) as ParsedData;
 
-    for (const { title } of contents.data) {
+    for (const { title, options } of contents.data) {
       it(`${command} test: ${title}`, async () => {
-        const result = (await client[
-          command as keyof UnboundControlClient
-        ]()) as ResponseData;
+        console.log(`Running ${command} test: ${title}`);
 
-        expect(result).toMatchSnapshot();
-        // expect(result.raw).toEqual(raw);
-        // expect(result.json).toEqual(expected);
-        await client.disconnect();
+        const method = client[command as keyof UnboundControlClient].bind(
+          client,
+        ) as (...args: any[]) => Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+        if (typeof method !== "function") {
+          throw new Error(`Invalid command: ${command}`);
+        }
+
+        const args =
+          options !== undefined
+            ? Array.isArray(options)
+              ? options
+              : [options]
+            : [];
+
+        try {
+          // メソッド呼び出し
+          const result = await method.apply(client, args); // eslint-disable-line @typescript-eslint/no-unsafe-assignment
+          expect(result).toMatchSnapshot();
+        } catch (error) {
+          expect((error as Error).message).toMatchSnapshot();
+        } finally {
+          await client.disconnect();
+        }
       });
     }
   }

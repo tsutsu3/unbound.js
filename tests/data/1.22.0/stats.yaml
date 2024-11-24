@@ -1,6 +1,27 @@
 data:
-  - title: Start up
+  - title: Default
     raw: |
+      thread0.num.queries=0
+      thread0.num.queries_ip_ratelimited=0
+      thread0.num.queries_cookie_valid=0
+      thread0.num.queries_cookie_client=0
+      thread0.num.queries_cookie_invalid=0
+      thread0.num.cachehits=0
+      thread0.num.cachemiss=0
+      thread0.num.prefetch=0
+      thread0.num.queries_timed_out=0
+      thread0.query.queue_time_us.max=0
+      thread0.num.expired=0
+      thread0.num.recursivereplies=0
+      thread0.requestlist.avg=0
+      thread0.requestlist.max=0
+      thread0.requestlist.overwritten=0
+      thread0.requestlist.exceeded=0
+      thread0.requestlist.current.all=0
+      thread0.requestlist.current.user=0
+      thread0.recursion.time.avg=0.000000
+      thread0.recursion.time.median=0
+      thread0.tcpusage=0
       total.num.queries=0
       total.num.queries_ip_ratelimited=0
       total.num.queries_cookie_valid=0
@@ -22,10 +43,39 @@ data:
       total.recursion.time.avg=0.000000
       total.recursion.time.median=0
       total.tcpusage=0
-      time.now=1731837810.163703
-      time.up=2.858856
-      time.elapsed=2.858856
+      time.now=1732438610.074050
+      time.up=60262.212517
+      time.elapsed=21.873387
     expected:
+      thread0:
+        num:
+          queries: 0
+          queries_ip_ratelimited: 0
+          queries_cookie_valid: 0
+          queries_cookie_client: 0
+          queries_cookie_invalid: 0
+          cachehits: 0
+          cachemiss: 0
+          prefetch: 0
+          queries_timed_out: 0
+          expired: 0
+          recursivereplies: 0
+        query:
+          queue_time_us:
+            max: 0
+        requestlist:
+          avg: 0
+          max: 0
+          overwritten: 0
+          exceeded: 0
+          current:
+            all: 0
+            user: 0
+        recursion:
+          time:
+            avg: 0.000000
+            median: 0
+        tcpusage: 0
       total:
         num:
           queries: 0
@@ -56,6 +106,320 @@ data:
             median: 0
         tcpusage: 0
       time:
-        now: 1731837810.163703
-        up: 2.858856
-        elapsed: 2.858856
+        now: 1732438610.074050
+        up: 60262.212517
+        elapsed: 21.873387
+  - title: Extended statistics
+    raw: |
+      thread0.num.queries=0
+      thread0.num.queries_ip_ratelimited=0
+      thread0.num.queries_cookie_valid=0
+      thread0.num.queries_cookie_client=0
+      thread0.num.queries_cookie_invalid=0
+      thread0.num.cachehits=0
+      thread0.num.cachemiss=0
+      thread0.num.prefetch=0
+      thread0.num.queries_timed_out=0
+      thread0.query.queue_time_us.max=0
+      thread0.num.expired=0
+      thread0.num.recursivereplies=0
+      thread0.requestlist.avg=0
+      thread0.requestlist.max=0
+      thread0.requestlist.overwritten=0
+      thread0.requestlist.exceeded=0
+      thread0.requestlist.current.all=0
+      thread0.requestlist.current.user=0
+      thread0.recursion.time.avg=0.000000
+      thread0.recursion.time.median=0
+      thread0.tcpusage=0
+      total.num.queries=0
+      total.num.queries_ip_ratelimited=0
+      total.num.queries_cookie_valid=0
+      total.num.queries_cookie_client=0
+      total.num.queries_cookie_invalid=0
+      total.num.cachehits=0
+      total.num.cachemiss=0
+      total.num.prefetch=0
+      total.num.queries_timed_out=0
+      total.query.queue_time_us.max=0
+      total.num.expired=0
+      total.num.recursivereplies=0
+      total.requestlist.avg=0
+      total.requestlist.max=0
+      total.requestlist.overwritten=0
+      total.requestlist.exceeded=0
+      total.requestlist.current.all=0
+      total.requestlist.current.user=0
+      total.recursion.time.avg=0.000000
+      total.recursion.time.median=0
+      total.tcpusage=0
+      time.now=1732449824.130593
+      time.up=266.736798
+      time.elapsed=39.933868
+      mem.cache.rrset=66104
+      mem.cache.message=66104
+      mem.mod.iterator=16748
+      mem.mod.validator=66384
+      mem.mod.respip=0
+      mem.mod.subnet=74536
+      mem.streamwait=0
+      mem.http.query_buffer=0
+      mem.http.response_buffer=0
+      histogram.000000.000000.to.000000.000001=0
+      histogram.000000.000001.to.000000.000002=0
+      histogram.000000.000002.to.000000.000004=0
+      histogram.000000.000004.to.000000.000008=0
+      histogram.000000.000008.to.000000.000016=0
+      histogram.000000.000016.to.000000.000032=0
+      histogram.000000.000032.to.000000.000064=0
+      histogram.000000.000064.to.000000.000128=0
+      histogram.000000.000128.to.000000.000256=0
+      histogram.000000.000256.to.000000.000512=0
+      histogram.000000.000512.to.000000.001024=0
+      histogram.000000.001024.to.000000.002048=0
+      histogram.000000.002048.to.000000.004096=0
+      histogram.000000.004096.to.000000.008192=0
+      histogram.000000.008192.to.000000.016384=0
+      histogram.000000.016384.to.000000.032768=0
+      histogram.000000.032768.to.000000.065536=0
+      histogram.000000.065536.to.000000.131072=0
+      histogram.000000.131072.to.000000.262144=0
+      histogram.000000.262144.to.000000.524288=0
+      histogram.000000.524288.to.000001.000000=0
+      histogram.000001.000000.to.000002.000000=0
+      histogram.000002.000000.to.000004.000000=0
+      histogram.000004.000000.to.000008.000000=0
+      histogram.000008.000000.to.000016.000000=0
+      histogram.000016.000000.to.000032.000000=0
+      histogram.000032.000000.to.000064.000000=0
+      histogram.000064.000000.to.000128.000000=0
+      histogram.000128.000000.to.000256.000000=0
+      histogram.000256.000000.to.000512.000000=0
+      histogram.000512.000000.to.001024.000000=0
+      histogram.001024.000000.to.002048.000000=0
+      histogram.002048.000000.to.004096.000000=0
+      histogram.004096.000000.to.008192.000000=0
+      histogram.008192.000000.to.016384.000000=0
+      histogram.016384.000000.to.032768.000000=0
+      histogram.032768.000000.to.065536.000000=0
+      histogram.065536.000000.to.131072.000000=0
+      histogram.131072.000000.to.262144.000000=0
+      histogram.262144.000000.to.524288.000000=0
+      num.query.tcp=0
+      num.query.tcpout=0
+      num.query.udpout=0
+      num.query.tls=0
+      num.query.tls.resume=0
+      num.query.ipv6=0
+      num.query.https=0
+      num.query.flags.QR=0
+      num.query.flags.AA=0
+      num.query.flags.TC=0
+      num.query.flags.RD=0
+      num.query.flags.RA=0
+      num.query.flags.Z=0
+      num.query.flags.AD=0
+      num.query.flags.CD=0
+      num.query.edns.present=0
+      num.query.edns.DO=0
+      num.answer.rcode.NOERROR=0
+      num.answer.rcode.FORMERR=0
+      num.answer.rcode.SERVFAIL=0
+      num.answer.rcode.NXDOMAIN=0
+      num.answer.rcode.NOTIMPL=0
+      num.answer.rcode.REFUSED=0
+      num.query.ratelimited=0
+      num.answer.secure=0
+      num.answer.bogus=0
+      num.rrset.bogus=0
+      num.query.aggressive.NOERROR=0
+      num.query.aggressive.NXDOMAIN=0
+      unwanted.queries=0
+      unwanted.replies=0
+      msg.cache.count=0
+      rrset.cache.count=0
+      infra.cache.count=7
+      key.cache.count=0
+      msg.cache.max_collisions=0
+      rrset.cache.max_collisions=1
+      num.query.authzone.up=0
+      num.query.authzone.down=0
+      num.query.subnet=0
+      num.query.subnet_cache=0
+    expected:
+      thread0:
+        num:
+          queries: 0
+          queries_ip_ratelimited: 0
+          queries_cookie_valid: 0
+          queries_cookie_client: 0
+          queries_cookie_invalid: 0
+          cachehits: 0
+          cachemiss: 0
+          prefetch: 0
+          queries_timed_out: 0
+          expired: 0
+          recursivereplies: 0
+        query:
+          queue_time_us:
+            max: 0
+        requestlist:
+          avg: 0
+          max: 0
+          overwritten: 0
+          exceeded: 0
+          current:
+            all: 0
+            user: 0
+        recursion:
+          time:
+            avg: 0.000000
+            median: 0
+        tcpusage: 0
+      total:
+        num:
+          queries: 0
+          queries_ip_ratelimited: 0
+          queries_cookie_valid: 0
+          queries_cookie_client: 0
+          queries_cookie_invalid: 0
+          cachehits: 0
+          cachemiss: 0
+          prefetch: 0
+          queries_timed_out: 0
+          expired: 0
+          recursivereplies: 0
+        query:
+          queue_time_us:
+            max: 0
+        requestlist:
+          avg: 0
+          max: 0
+          overwritten: 0
+          exceeded: 0
+          current:
+            all: 0
+            user: 0
+        recursion:
+          time:
+            avg: 0.000000
+            median: 0
+        tcpusage: 0
+      time:
+        now: 1732449824.130593
+        up: 266.736798
+        elapsed: 39.933868
+      mem:
+        cache:
+          rrset: 66104
+          message: 66104
+        mod:
+          iterator: 16748
+          validator: 66384
+          respip: 0
+          subnet: 74536
+        streamwait: 0
+        http:
+          query_buffer: 0
+          response_buffer: 0
+      histogram:
+        '000000.000000.to.000000.000001': 0
+        '000000.000001.to.000000.000002': 0
+        '000000.000002.to.000000.000004': 0
+        '000000.000004.to.000000.000008': 0
+        '000000.000008.to.000000.000016': 0
+        '000000.000016.to.000000.000032': 0
+        '000000.000032.to.000000.000064': 0
+        '000000.000064.to.000000.000128': 0
+        '000000.000128.to.000000.000256': 0
+        '000000.000256.to.000000.000512': 0
+        '000000.000512.to.000000.001024': 0
+        '000000.001024.to.000000.002048': 0
+        '000000.002048.to.000000.004096': 0
+        '000000.004096.to.000000.008192': 0
+        '000000.008192.to.000000.016384': 0
+        '000000.016384.to.000000.032768': 0
+        '000000.032768.to.000000.065536': 0
+        '000000.065536.to.000000.131072': 0
+        '000000.131072.to.000000.262144': 0
+        '000000.262144.to.000000.524288': 0
+        '000000.524288.to.000001.000000': 0
+        '000001.000000.to.000002.000000': 0
+        '000002.000000.to.000004.000000': 0
+        '000004.000000.to.000008.000000': 0
+        '000008.000000.to.000016.000000': 0
+        '000016.000000.to.000032.000000': 0
+        '000032.000000.to.000064.000000': 0
+        '000064.000000.to.000128.000000': 0
+        '000128.000000.to.000256.000000': 0
+        '000256.000000.to.000512.000000': 0
+        '000512.000000.to.001024.000000': 0
+        '001024.000000.to.002048.000000': 0
+        '002048.000000.to.004096.000000': 0
+        '004096.000000.to.008192.000000': 0
+        '008192.000000.to.016384.000000': 0
+        '016384.000000.to.032768.000000': 0
+        '032768.000000.to.065536.000000': 0
+        '065536.000000.to.131072.000000': 0
+        '131072.000000.to.262144.000000': 0
+        '262144.000000.to.524288.000000': 0
+      num:
+        query:
+          tcp: 0
+          tcpout: 0
+          udpout: 0
+          tls:
+            num: 0
+            resume: 0
+          ipv6: 0
+          https: 0
+          flags:
+            QR: 0
+            AA: 0
+            TC: 0
+            RD: 0
+            RA: 0
+            Z: 0
+            AD: 0
+            CD: 0
+          edns:
+            present: 0
+            DO: 0
+          ratelimited: 0
+          aggressive:
+            NOERROR: 0
+            NXDOMAIN: 0
+          authzone:
+            up: 0
+            down: 0
+          subnet: 0
+          subnet_cache: 0
+        answer:
+          rcode:
+            NOERROR: 0
+            FORMERR: 0
+            SERVFAIL: 0
+            NXDOMAIN: 0
+            NOTIMPL: 0
+            REFUSED: 0
+          secure: 0
+          bogus: 0
+        rrset:
+          bogus: 0
+      unwanted:
+        queries: 0
+        replies: 0
+      msg:
+        cache:
+          count: 0
+          max_collisions: 0
+      rrset:
+        cache:
+          count: 0
+          max_collisions: 1
+      infra:
+        cache:
+          count: 7
+      key:
+        cache:
+          count: 0

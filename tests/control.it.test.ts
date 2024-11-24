@@ -13,14 +13,11 @@ interface ParsedData {
 
 interface TestCase {
   title: string;
+  options: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   raw: string;
   expected: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  exception: string;
 }
-
-// interface ResponseData {
-//   raw: string;
-//   json: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-// }
 
 describe(`Unix domain socket docker server tests. Unbound version: ${unboundVersion}`, () => {
   let client: UnboundControlClient;
@@ -42,13 +39,29 @@ describe(`Unix domain socket docker server tests. Unbound version: ${unboundVers
     const fileContent = fs.readFileSync(path.join(dataDir, file), "utf-8");
     const contents = YAML.parse(fileContent) as ParsedData;
 
-    // TODO: Check json schema
-    for (const { title } of contents.data) {
+    for (const { title, options, exception } of contents.data) {
       it(`${command} test: ${title}`, async () => {
-        await expect(
-          client[command as keyof UnboundControlClient](),
-        ).resolves.not.toThrow();
+        console.log(`Running ${command} test: ${title}`);
 
+        const method = client[command as keyof UnboundControlClient].bind(
+          client,
+        ) as (...args: any[]) => Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+        if (typeof method !== "function") {
+          throw new Error(`Invalid command: ${command}`);
+        }
+
+        const args =
+          options !== undefined
+            ? Array.isArray(options)
+              ? options
+              : [options]
+            : [];
+
+        if (exception) {
+          await expect(method.apply(client, args)).rejects.toThrow(exception);
+        } else {
+          await expect(method.apply(client, args)).resolves.not.toThrow();
+        }
         await client.disconnect();
       });
     }

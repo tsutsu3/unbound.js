@@ -27,7 +27,7 @@ export class UnixMockServer implements MockServer {
       });
 
       socket.on("end", () => {
-        socket.destroy(); // 接続を完全に破棄
+        socket.destroy();
       });
 
       socket.on("error", () => {

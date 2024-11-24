@@ -1,4 +1,4 @@
-import { UnboundControlClient } from "../src/index";
+import { UnixUnboundClient } from "../src/index";
 import fs from "fs";
 import path from "path";
 import YAML from "yaml";
@@ -20,14 +20,14 @@ interface TestCase {
 }
 
 describe(`Unix domain socket docker server tests. Unbound version: ${unboundVersion}`, () => {
-  let client: UnboundControlClient;
+  let client: UnixUnboundClient;
   const unixSocketPath = path.join(
     baseDir,
     "../unbound-config/unix/socket/unbound.ctl",
   );
 
   beforeAll(() => {
-    client = new UnboundControlClient(unixSocketPath);
+    client = new UnixUnboundClient(unixSocketPath);
   });
 
   const files = fs
@@ -43,7 +43,7 @@ describe(`Unix domain socket docker server tests. Unbound version: ${unboundVers
       it(`${command} test: ${title}`, async () => {
         console.log(`Running ${command} test: ${title}`);
 
-        const method = client[command as keyof UnboundControlClient].bind(
+        const method = client[command as keyof UnixUnboundClient].bind(
           client,
         ) as (...args: any[]) => Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
         if (typeof method !== "function") {

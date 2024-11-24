@@ -1,116 +1,21 @@
 import { UnboundControl } from "./control";
 import { ParseError } from "./error";
+import { Response, TlsConfig, NestedRecord, ValidOption } from "./types";
 
-/**
- * A list of valid configuration options for the `set_option` command.
- */
-export type ValidOption =
-  | "statistics-interval"
-  | "statistics-cumulative"
-  | "do-not-query-localhost"
-  | "harden-short-bufsize"
-  | "harden-large-queries"
-  | "harden-glue"
-  | "harden-dnssec-stripped"
-  | "harden-below-nxdomain"
-  | "harden-referral-path"
-  | "prefetch"
-  | "prefetch-key"
-  | "log-queries"
-  | "hide-identity"
-  | "hide-version"
-  | "identity"
-  | "version"
-  | "val-log-level"
-  | "val-log-squelch"
-  | "ignore-cd-flag"
-  | "add-holddown"
-  | "del-holddown"
-  | "keep-missing"
-  | "tcp-upstream"
-  | "ssl-upstream"
-  | "max-udp-size"
-  | "ratelimit"
-  | "ip-ratelimit"
-  | "cache-max-ttl"
-  | "cache-min-ttl"
-  | "cache-max-negative-ttl";
-
-export interface Response {
-  raw: string;
-  json: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-}
-
-// export interface StatusResponse {
-//   version: string;
-//   verbosity: number;
-//   threads: number;
-//   modules: string[];
-//   uptime: number;
-//   options: string[];
-//   pid: number;
-//   status: string;
-// }
-
-// export interface StasResponse {
-//   total: {
-//     num: {
-//       queries: number;
-//       queries_ip_ratelimited: number;
-//       queries_cookie_valid: number;
-//       queries_cookie_client: number;
-//       queries_cookie_invalid: number;
-//       cachehits: number;
-//       cachemiss: number;
-//       prefetch: number;
-//       queries_timed_out: number;
-//       expired: number;
-//       recursivereplies: number;
-//     };
-//     query: {
-//       queue_time_us: {
-//         max: number;
-//       };
-//     };
-//     requestlist: {
-//       avg: number;
-//       max: number;
-//       overwritten: number;
-//       exceeded: number;
-//       current: {
-//         all: number;
-//         user: number;
-//       };
-//     };
-//     recursion: {
-//       time: {
-//         avg: number;
-//         median: number;
-//       };
-//     };
-//     tcpusage: number;
-//   };
-//   time: {
-//     now: number;
-//     up: number;
-//     elapsed: number;
-//   };
-// }
-
-export interface NestedRecord {
-  [key: string]: string | number | string[] | NestedRecord;
-}
-
-export class UnboundControlClient {
+abstract class UnboundControlClient {
   private control: UnboundControl;
 
   constructor(
-    unixSocketName: string | null = null,
-    // host: string = "127.0.0.1",
-    // port: number = 8953,
-    // tlsConfig?: TLSConfig,
+    unixSocketName: string | null,
+    host?: string,
+    port?: number,
+    tlsConfig?: TlsConfig | null,
   ) {
-    this.control = new UnboundControl(unixSocketName);
+    if (unixSocketName) {
+      this.control = new UnboundControl(unixSocketName);
+    } else {
+      this.control = new UnboundControl(null, host, port, tlsConfig);
+    }
   }
 
   /**
@@ -949,5 +854,18 @@ export class UnboundControlClient {
       raw: raw,
       json: { todo: "Not implemented" },
     };
+  }
+}
+
+export class UnixUnboundClient extends UnboundControlClient {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor(unixSocketName: string) {
+    super(unixSocketName);
+  }
+}
+
+export class TcpUnboundClient extends UnboundControlClient {
+  constructor(host: string, port: number, tlsConfig?: TlsConfig) {
+    super(null, host, port, tlsConfig);
   }
 }

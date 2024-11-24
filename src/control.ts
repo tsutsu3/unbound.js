@@ -1,43 +1,28 @@
 import net from "net";
+import tls from "tls";
+import fs from "fs";
 import { ConnectionError, CommandError } from "./error";
-// import tls from "tls";
-
-/**
- * Configuration for the TLS connection.
- */
-// export interface TLSConfig {
-//   /** Certificate file. */
-//   cert: string;
-
-//   /** Key file. */
-//   key: string;
-
-//   /** CA certificate file. */
-//   ca?: string;
-
-//   /** Reject unauthorized connections. If set to false, the server certificate is not verified. */
-//   rejectUnauthorized: boolean;
-// }
+import { TlsConfig } from "./types";
 
 /**
  * A class to interact with an Unbound control interface via TCP or Unix socket.
  * Provides methods to establish connections and send commands to the Unbound DNS resolver.
  */
 export class UnboundControl {
-  /** The host address for TCP connections. */
-  // private readonly host: string;
-
-  /** The port number for TCP connections. */
-  // private readonly port: number;
-
   /** The path to the Unix domain socket (if applicable). */
   private readonly unixSocketName: string | null;
 
-  /** The underlying network socket for communication. */
-  private socket: net.Socket | null = null;
+  /** The host address for TCP connections. */
+  private readonly host: string;
+
+  /** The port number for TCP connections. */
+  private readonly port: number;
 
   /** Optional TLS configuration for secure connections. */
-  // private readonly tlsConfig: TLSConfig | null = null;
+  private readonly tlsConfig: TlsConfig | null = null;
+
+  /** The underlying network socket for communication. */
+  private socket: net.Socket | null = null;
 
   /**
    * Creates a new instance of the UnboundControl class.
@@ -49,14 +34,14 @@ export class UnboundControl {
    */
   constructor(
     unixSocketName: string | null = null,
-    // host: string = "127.0.0.1",
-    // port: number = 8953,
-    // tlsConfig?: TLSConfig,
+    host: string = "localhost",
+    port: number = 8953,
+    tlsConfig: TlsConfig | null = null,
   ) {
     this.unixSocketName = unixSocketName;
-    // this.host = host;
-    // this.port = port;
-    // this.tlsConfig = tlsConfig || null;
+    this.host = host;
+    this.port = port;
+    this.tlsConfig = tlsConfig;
   }
 
   /**
@@ -79,15 +64,21 @@ export class UnboundControl {
       if (this.unixSocketName !== null) {
         socket = net.createConnection(this.unixSocketName);
       } else {
-        throw new Error("Not implemented");
+        if (this.tlsConfig) {
+          socket = tls.connect({
+            host: this.host,
+            port: this.port,
+            rejectUnauthorized: this.tlsConfig.ca ? true : false,
+            cert: fs.readFileSync(this.tlsConfig.cert),
+            key: fs.readFileSync(this.tlsConfig.key),
+            ca: this.tlsConfig.ca
+              ? fs.readFileSync(this.tlsConfig.ca)
+              : undefined,
+          });
+        } else {
+          socket = net.createConnection(this.port, this.host);
+        }
       }
-      // else {
-      //   socket = tls.createConnection({
-      //     host: this.host,
-      //     port: this.port,
-      //     ...this.tlsConfig,
-      //   });
-      // }
 
       socket.once("connect", () => {
         this.socket = socket;

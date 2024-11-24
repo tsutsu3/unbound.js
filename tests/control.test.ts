@@ -1,5 +1,5 @@
 import { UnixMockServer, MockServer } from "./mockServer";
-import { UnboundControlClient } from "../src/index";
+import { UnixUnboundClient } from "../src/index";
 import fs from "fs";
 import path from "path";
 import YAML from "yaml";
@@ -27,7 +27,7 @@ interface Response {
 
 describe(`Unix domain socket mock server tests. Unbound version: ${unboundVersion}`, () => {
   let server: MockServer;
-  let client: UnboundControlClient;
+  let client: UnixUnboundClient;
   const unixSocketPath = "/tmp/mock.sock";
 
   beforeAll(() => {
@@ -35,7 +35,7 @@ describe(`Unix domain socket mock server tests. Unbound version: ${unboundVersio
       fs.unlinkSync(unixSocketPath);
     }
     server = new UnixMockServer(unixSocketPath);
-    client = new UnboundControlClient(unixSocketPath);
+    client = new UnixUnboundClient(unixSocketPath);
   });
 
   afterEach(async () => {
@@ -55,7 +55,7 @@ describe(`Unix domain socket mock server tests. Unbound version: ${unboundVersio
       it(`${command} test: ${title}`, async () => {
         server.start(raw);
 
-        const method = client[command as keyof UnboundControlClient].bind(
+        const method = client[command as keyof UnixUnboundClient].bind(
           client,
         ) as (...args: any[]) => Promise<Response>; // eslint-disable-line @typescript-eslint/no-explicit-any
         if (typeof method !== "function") {

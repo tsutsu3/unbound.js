@@ -1,5 +1,5 @@
 export { UnboundControl } from "./control";
-export { UnboundControlClient } from "./client";
+export { UnixUnboundClient, TcpUnboundClient } from "./client";
 export {
   UnboundError,
   ConnectionError,

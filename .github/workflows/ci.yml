@@ -34,9 +34,9 @@ jobs:
         run: sudo apt-get install -y openssl
       - name: Generate server key
         run: |
-          openssl genrsa -out tests/key/unbound_server.ky2048
-          openssl req -new -key tests/key/unbound_server.ky-out unbound_server.csr -subj "/CN=server"
-          openssl x509 -req -in tests/key/unbound_server.csr -signkey unbound_server.ky-out unbound_server.pem -days 365
+          openssl genrsa -out tests/key/unbound_server.key 2048
+          openssl req -new -key tests/key/unbound_server.key -out unbound_server.csr -subj "/CN=server"
+          openssl x509 -req -in tests/key/unbound_server.csr -signkey unbound_server.key -out unbound_server.pem -days 365
 
       - name: Generate client key
         run: |

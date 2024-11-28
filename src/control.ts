@@ -10,7 +10,7 @@ import { TlsConfig } from "./types";
  */
 export class UnboundControl {
   /** The path to the Unix domain socket (if applicable). */
-  private readonly unixSocketName: string | null;
+  private readonly unixSocketName?: string;
 
   /** The host address for TCP connections. */
   private readonly host: string;
@@ -19,10 +19,10 @@ export class UnboundControl {
   private readonly port: number;
 
   /** Optional TLS configuration for secure connections. */
-  private readonly tlsConfig: TlsConfig | null = null;
+  private readonly tlsConfig?: TlsConfig;
 
   /** The underlying network socket for communication. */
-  private socket: net.Socket | null = null;
+  private socket?: net.Socket | null;
 
   /**
    * Creates a new instance of the UnboundControl class.
@@ -33,10 +33,10 @@ export class UnboundControl {
    * @param tlsConfig - Optional TLS configuration for secure connections.
    */
   constructor(
-    unixSocketName: string | null = null,
+    unixSocketName?: string,
     host: string = "localhost",
     port: number = 8953,
-    tlsConfig: TlsConfig | null = null,
+    tlsConfig?: TlsConfig,
   ) {
     this.unixSocketName = unixSocketName;
     this.host = host;
@@ -61,22 +61,40 @@ export class UnboundControl {
     return new Promise((resolve, reject) => {
       let socket: net.Socket;
 
-      if (this.unixSocketName !== null) {
+      if (this.unixSocketName) {
         socket = net.createConnection(this.unixSocketName);
       } else {
         if (this.tlsConfig) {
-          socket = tls.connect({
-            host: this.host,
-            port: this.port,
-            rejectUnauthorized: this.tlsConfig.ca ? true : false,
-            cert: fs.readFileSync(this.tlsConfig.cert),
-            key: fs.readFileSync(this.tlsConfig.key),
-            ca: this.tlsConfig.ca
-              ? fs.readFileSync(this.tlsConfig.ca)
-              : undefined,
-          });
+          // Connect via TLS
+          socket = tls.connect(
+            {
+              host: this.host,
+              port: this.port,
+              rejectUnauthorized: !!this.tlsConfig.ca,
+              cert: fs.readFileSync(this.tlsConfig.cert),
+              key: fs.readFileSync(this.tlsConfig.key),
+              ca: this.tlsConfig.ca
+                ? fs.readFileSync(this.tlsConfig.ca)
+                : undefined,
+            },
+            () => {
+              const tlsSocket = socket as tls.TLSSocket;
+              if (tlsSocket.authorized || !this.tlsConfig?.ca) {
+                resolve(tlsSocket);
+              } else {
+                reject(
+                  new ConnectionError(
+                    `TLS authorization failed: ${tlsSocket.authorizationError}`,
+                  ),
+                );
+              }
+            },
+          );
         } else {
-          socket = net.createConnection(this.port, this.host);
+          // Connect via plain TCP
+          socket = net.createConnection(this.port, this.host, () => {
+            resolve(socket);
+          });
         }
       }
 

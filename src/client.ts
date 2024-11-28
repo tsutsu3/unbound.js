@@ -6,15 +6,15 @@ abstract class UnboundControlClient {
   private control: UnboundControl;
 
   constructor(
-    unixSocketName: string | null,
+    unixSocketName?: string,
     host?: string,
     port?: number,
-    tlsConfig?: TlsConfig | null,
+    tlsConfig?: TlsConfig,
   ) {
     if (unixSocketName) {
       this.control = new UnboundControl(unixSocketName);
     } else {
-      this.control = new UnboundControl(null, host, port, tlsConfig);
+      this.control = new UnboundControl(undefined, host, port, tlsConfig);
     }
   }
 
@@ -865,7 +865,7 @@ export class UnixUnboundClient extends UnboundControlClient {
 }
 
 export class TcpUnboundClient extends UnboundControlClient {
-  constructor(host: string, port: number, tlsConfig?: TlsConfig) {
-    super(null, host, port, tlsConfig);
+  constructor(host: string, port: number, tlsConfig: TlsConfig) {
+    super(undefined, host, port, tlsConfig);
   }
 }

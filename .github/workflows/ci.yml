@@ -35,19 +35,20 @@ jobs:
       - name: Generate server key
         run: |
           openssl genrsa -out tests/key/unbound_server.key 2048
-          openssl req -new -key tests/key/unbound_server.key -out unbound_server.csr -subj "/CN=server"
-          openssl x509 -req -in tests/key/unbound_server.csr -signkey unbound_server.key -out unbound_server.pem -days 365
+          openssl req -new -key tests/key/unbound_server.key -out tests/key/unbound_server.csr -subj "/CN=server"
+          openssl x509 -req -in tests/key/unbound_server.csr -signkey tests/key/unbound_server.key -out tests/key/unbound_server.pem -days 365
 
       - name: Generate client key
         run: |
           openssl genrsa -out tests/key/unbound_control.key 2048
-          openssl req -new -key tests/key/unbound_control.key -out unbound_control.csr -subj "/CN=client"
-          openssl x509 -req -in tests/key/unbound_control.csr -signkey unbound_control.key -out unbound_control.pem -days 365
+          openssl req -new -key tests/key/unbound_control.key -out tests/key/unbound_control.csr -subj "/CN=client"
+          openssl x509 -req -in tests/key/unbound_control.csr -signkey tests/key/unbound_control.key -out tests/key/unbound_control.pem -days 365
 
       - name: List generated files
         run: ls -l
   test:
     name: Test
+    needs: generate-certs
     runs-on: ubuntu-latest
     strategy:
       matrix:

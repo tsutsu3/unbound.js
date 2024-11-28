@@ -24,6 +24,28 @@ jobs:
         run: npm ci
       - name: Lint with ESLint
         run: npm run lint
+  generate-certs:
+    name: Generate Certs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install OpenSSL
+        run: sudo apt-get install -y openssl
+      - name: Generate server key
+        run: |
+          openssl genrsa -out tests/key/unbound_server.ky2048
+          openssl req -new -key tests/key/unbound_server.ky-out unbound_server.csr -subj "/CN=server"
+          openssl x509 -req -in tests/key/unbound_server.csr -signkey unbound_server.ky-out unbound_server.pem -days 365
+
+      - name: Generate client key
+        run: |
+          openssl genrsa -out tests/key/unbound_control.key 2048
+          openssl req -new -key tests/key/unbound_control.key -out unbound_control.csr -subj "/CN=client"
+          openssl x509 -req -in tests/key/unbound_control.csr -signkey unbound_control.key -out unbound_control.pem -days 365
+
+      - name: List generated files
+        run: ls -l
   test:
     name: Test
     runs-on: ubuntu-latest

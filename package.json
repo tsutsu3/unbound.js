@@ -35,9 +35,12 @@
     "build": "tsc && vite build",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest",
-    "sample:esm:node": "node examples/node/index.mjs",
-    "sample:cjs:node": "node examples/node/index.cjs",
+    "test": "jest --detectOpenHandles tests/control.test.ts",
+    "test:it": "jest --detectOpenHandles tests/control.it.test.ts",
+    "snapshot": "jest --detectOpenHandles tests/control.snapshot.test.ts",
+    "snapshot:update": "jest --detectOpenHandles --updateSnapshot tests/control.snapshot.test.ts",
+    "sample:esm": "node examples/index.mjs",
+    "sample:cjs": "node examples/index.cjs",
     "sample": "npm run test:esm:node && npm run test:cjs:node"
   },
   "devDependencies": {
@@ -53,10 +56,11 @@
     "prettier": "^3.3.3",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "~5.6.2",
-    "typescript-eslint": "^8.14.0",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.15.0",
     "uninstall": "^0.0.0",
     "vite": "^5.4.10",
-    "vite-plugin-dts": "^4.3.0"
+    "vite-plugin-dts": "^4.3.0",
+    "yaml": "^2.6.1"
   }
 }

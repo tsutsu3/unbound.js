@@ -1,0 +1,12 @@
+data:
+  - title: Set verbosity to 0
+    options: 0
+    raw: |
+      ok
+    expected:
+      status: ok
+  - title: Set verbosity to 9
+    options: 9
+    raw: |
+      ok
+    exception: "Invalid verbosity level: 9"

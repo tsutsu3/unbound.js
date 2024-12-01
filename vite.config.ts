@@ -15,6 +15,7 @@ export default defineConfig({
       },
     },
     rollupOptions: {
+      external: ["net", "fs", "path"],
       output: {
         dir: "dist",
       },
@@ -23,6 +24,8 @@ export default defineConfig({
   plugins: [
     dts({
       tsconfigPath: "./tsconfig.json",
+      rollupTypes: true,
+      outDir: "dist",
     }),
   ],
 });

@@ -1,0 +1,19 @@
+data:
+  - title: Default
+    raw: |
+      version: 1.22.0
+      verbosity: 1
+      threads: 1
+      modules: 3  [ subnetcache validator iterator ]
+      uptime: 3 seconds
+      options: [ reuseport control(namedpipe) ]
+      unbound (pid 1) is running...
+    expected:
+      version: 1.22.0
+      verbosity: 1
+      threads: 1
+      modules: [subnetcache, validator, iterator]
+      uptime: 3
+      options: [reuseport, control(namedpipe)]
+      pid: 1
+      status: running

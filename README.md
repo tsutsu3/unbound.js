@@ -10,6 +10,7 @@
 [![MIT License][license-shield]][license-url]
 [![CodeCov][codecov-shield]][codecov-url]
 [![CodeClimate][codeclimate-shield]][codeclimate-url]
+[![Codaocy][codacy-shield]][codacy-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -236,3 +237,5 @@ Distributed under the MIT License. See [LICENSE](./LICENSE) for more information
 [codecov-url]: https://codecov.io/gh/tsutsu3/unbound-control-ts
 [codeclimate-shield]: https://img.shields.io/codeclimate/maintainability/tsutsu3/unbound-control-ts?style=for-the-badge&logo=codeclimate
 [codeclimate-url]: https://codeclimate.com/github/tsutsu3/unbound-control-ts/maintainability
+[codacy-shield]: https://img.shields.io/codacy/grade/d89bc6f348154ab4a8f73cea41667ed3?style=for-the-badge&logo=codacy
+[codacy-url]: https://app.codacy.com/gh/tsutsu3/unbound-control-ts/dashboard

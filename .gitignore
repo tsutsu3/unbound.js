@@ -28,3 +28,4 @@ unbound-config/*/*
 tests/__snapshots__
 tests/key/*
 !.gitkeep
+.env

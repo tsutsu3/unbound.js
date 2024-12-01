@@ -12,6 +12,7 @@ services:
         unbound-control-setup &&
         mkdir /opt/unbound/etc/unbound/key /opt/unbound/etc/unbound/socket &&
         mv /opt/unbound/etc/unbound/unbound_* /opt/unbound/etc/unbound/key &&
+        chown 1000 /opt/unbound/etc/unbound/key/* &&
         echo 'Setup complete';
       else
         echo 'Certificates already exist';
